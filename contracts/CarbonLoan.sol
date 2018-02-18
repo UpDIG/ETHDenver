@@ -25,15 +25,15 @@ contract CarbonLoan is UnlockVault {
        return (DebtorIndexes[debtors[debtor_address].registryID] == debtor_address);
     }
 
-    function newDebtorSignup() public {
-        if (msg.sender == address(0)) revert();
+    function newDebtorSignup(address _debtorAddress) public {
+        if (_debtorAddress == address(0)) revert();
         if (isRegisteredDebtor(msg.sender)) revert();
-        debtors[msg.sender].registryID = DebtorIndexes.push(msg.sender) - 1 ;
-        debtors[msg.sender].numloans = 0;
-        debtors[msg.sender].owe = 0;
-        debtors[msg.sender].paid = 0;
-        debtors[msg.sender].canborrow = true;
-        NewDebtor(debtors[msg.sender].registryID);
+        debtors[_debtorAddress].registryID = DebtorIndexes.push(msg.sender) - 1 ;
+        debtors[_debtorAddress].numloans = 0;
+        debtors[_debtorAddress].owe = 0;
+        debtors[_debtorAddress].paid = 0;
+        debtors[_debtorAddress].canborrow = true;
+        NewDebtor(debtors[_debtorAddress].registryID);
     }
 
     function approveloan(address debtor_address) public onlyOpenAddress returns (bool success){
