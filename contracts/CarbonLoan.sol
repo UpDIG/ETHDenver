@@ -43,7 +43,6 @@ contract CarbonLoan is UnlockVault {
         // uint paid = debtors[debtor_address].paid;
         bool canborrow = debtors[debtor_address].canborrow;
         if (! canborrow) return false;
-        allowance(msg.sender, msg.sender);
         increaseApproval(msg.sender, 5);
         transferFrom(msg.sender, debtor_address, 5);
         availableFund = availableFund - 5;

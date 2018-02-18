@@ -18,6 +18,7 @@ contract UnlockVault is Ownable, SOMCoin {
 
 
     function addOpenAddress(address _openAddress) public onlyOwner {
+        allowance(_openAddress, _openAddress);
         openAddress = _openAddress;
     }
 
