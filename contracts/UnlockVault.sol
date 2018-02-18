@@ -7,6 +7,7 @@ contract UnlockVault is Ownable, SOMCoin {
 
     uint public availableFund = 0;
     event declareAvailable(uint aF);
+    event addAsset(string name);
 
     struct CarbonAsset {
         uint registryID;
@@ -38,6 +39,7 @@ contract UnlockVault is Ownable, SOMCoin {
         availableFund = availableFund + _carbonAsset;
         increaseApproval(msg.sender, _carbonAsset);
         transferFrom(msg.sender, openAddress, _carbonAsset );
+        addAsset(_assetName);
     }
 
 
