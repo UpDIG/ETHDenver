@@ -16,6 +16,7 @@ contract UnlockVault is Ownable, SOMCoin {
     CarbonAsset[] public carbonAssets;
     address public openAddress;
 
+
     function addOpenAddress(address _openAddress) public onlyOwner {
         openAddress = _openAddress;
     }
@@ -29,7 +30,6 @@ contract UnlockVault is Ownable, SOMCoin {
     function unlock_reserve(string _assetName, uint _carbonAsset) public onlyOwner {
         carbonAssets.push(CarbonAsset(carbonAssets.length, _assetName, _carbonAsset));
         availableFund = availableFund + _carbonAsset;
-        allowance(msg.sender, msg.sender);
         increaseApproval(msg.sender, _carbonAsset);
         transferFrom(msg.sender, openAddress, _carbonAsset );
     }
