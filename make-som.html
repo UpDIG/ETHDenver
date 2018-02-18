@@ -14,12 +14,11 @@
 <body>
     <div class="container">
 
-        <h1>Make SOM</h1>
+        <h1>Mint SOM</h1>
 
         <h2 id="mint some"></h2>
         <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
-
-        <label for="to_address" class="col-lg-2 control-label">Who gets it</label>
+        <label for="to_address" class="col-lg-2 control-label">Vault Address </label>
         <input id="to_address" type="text">
 
         <label for="quant" class="col-lg-2 control-label">How much</label>
@@ -40,7 +39,7 @@
             web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
         }
         web3.eth.defaultAccount = web3.eth.accounts[0];
-        var CoursetroContract = web3.eth.contract([
+        var SOMCoinContract = web3.eth.contract([
             {
                 "constant": true,
                 "inputs": [],
@@ -380,8 +379,8 @@
                 "type": "event"
             }
         ]);
-        var Coursetro = CoursetroContract.at('0x618b4ce11c821013ee981e5758a0a6098f905849');
-        console.log(Coursetro);
+        var SOMCoin = SOMCoinContract.at('0xe7d45675c29976618d6b340c5bc5d86a3b04f4bb');
+        console.log(SOMCoin);
         // Coursetro.getInstructor(function(error, result){
         //     if(!error)
         //         {
@@ -391,9 +390,9 @@
         //     else
         //         console.error(error);
         // });
-        var instructorEvent = Coursetro.Instructor();
+        var somEvent = SOMCoin.Mint();
 
-        instructorEvent.watch(function(error, result){
+        somEvent.watch(function(error, result){
             if (!error)
                 {
                     $("#loader").hide();
@@ -406,7 +405,7 @@
 
         $("#button").click(function() {
             $("#loader").show();
-            Coursetro.setInstructor($("#name").val(), $("#age").val(), (err, res) => {
+            SOMCoin.mint($("#to_address").val(), $("#quant").val(), (err, res) => {
                 if (err) {
                     $("#loader").hide();
                     console.log('oooops');
