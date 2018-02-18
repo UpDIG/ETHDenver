@@ -32,7 +32,7 @@ contract SOMCoin is StandardToken, Ownable {
     totalSupply_ = totalSupply_.add(_amount);
     balances[_to] = balances[_to].add(_amount);
     Mint(_to, _amount);
-    allowance(msg.sender, msg.sender)
+    allowance(msg.sender, msg.sender);
     Transfer(address(0), _to, _amount);
     return true;
   }
