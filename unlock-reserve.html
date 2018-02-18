@@ -16,7 +16,7 @@
 
         <h1>Carbon Incoming</h1>
 
-        <h2 id="carbon_in">ccc</h2>
+        <h2 id="carbon_in">200 SOM</h2>
         <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
         <label for="land" class="col-lg-2 control-label">Carbon Lender </label>
         <input id="land" type="text">
@@ -40,82 +40,21 @@
         web3.eth.defaultAccount = web3.eth.accounts[0];
         var unlockReserveContract = web3.eth.contract([
     {
-        "constant": true,
+        "constant": false,
         "inputs": [
             {
-                "name": "_owner",
-                "type": "address"
+                "name": "_assetName",
+                "type": "string"
             },
             {
-                "name": "_spender",
-                "type": "address"
-            }
-        ],
-        "name": "allowance",
-        "outputs": [
-            {
-                "name": "",
+                "name": "_carbonAsset",
                 "type": "uint256"
             }
         ],
+        "name": "unlock_reserve",
+        "outputs": [],
         "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "availableFund",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "totalSupply",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "owner",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "openAddress",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -133,52 +72,6 @@
         "type": "function"
     },
     {
-        "constant": true,
-        "inputs": [
-            {
-                "name": "_owner",
-                "type": "address"
-            }
-        ],
-        "name": "balanceOf",
-        "outputs": [
-            {
-                "name": "balance",
-                "type": "uint256"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "name": "carbonAssets",
-        "outputs": [
-            {
-                "name": "registryID",
-                "type": "uint256"
-            },
-            {
-                "name": "assetName",
-                "type": "string"
-            },
-            {
-                "name": "carbonAsset",
-                "type": "uint256"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
         "constant": false,
         "inputs": [
             {
@@ -186,11 +79,11 @@
                 "type": "address"
             },
             {
-                "name": "_subtractedValue",
+                "name": "_value",
                 "type": "uint256"
             }
         ],
-        "name": "decreaseApproval",
+        "name": "approve",
         "outputs": [
             {
                 "name": "",
@@ -202,26 +95,32 @@
         "type": "function"
     },
     {
-        "anonymous": false,
+        "constant": false,
         "inputs": [
             {
-                "indexed": true,
-                "name": "owner",
+                "name": "_openAddress",
                 "type": "address"
-            },
+            }
+        ],
+        "name": "addOpenAddress",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "totalSupply",
+        "outputs": [
             {
-                "indexed": true,
-                "name": "spender",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "value",
+                "name": "",
                 "type": "uint256"
             }
         ],
-        "name": "Approval",
-        "type": "event"
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
     },
     {
         "constant": false,
@@ -254,16 +153,21 @@
         "constant": false,
         "inputs": [
             {
-                "name": "_assetName",
-                "type": "string"
+                "name": "_to",
+                "type": "address"
             },
             {
-                "name": "_carbonAsset",
+                "name": "_amount",
                 "type": "uint256"
             }
         ],
-        "name": "unlock_reserve",
-        "outputs": [],
+        "name": "mint",
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool"
+            }
+        ],
         "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
@@ -272,14 +176,42 @@
         "constant": false,
         "inputs": [
             {
-                "name": "_openAddress",
+                "name": "_spender",
+                "type": "address"
+            },
+            {
+                "name": "_subtractedValue",
+                "type": "uint256"
+            }
+        ],
+        "name": "decreaseApproval",
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "_owner",
                 "type": "address"
             }
         ],
-        "name": "addOpenAddress",
-        "outputs": [],
+        "name": "balanceOf",
+        "outputs": [
+            {
+                "name": "balance",
+                "type": "uint256"
+            }
+        ],
         "payable": false,
-        "stateMutability": "nonpayable",
+        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -294,6 +226,93 @@
         ],
         "payable": false,
         "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+            {
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "getAvailableFund",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "_to",
+                "type": "address"
+            },
+            {
+                "name": "_value",
+                "type": "uint256"
+            }
+        ],
+        "name": "transfer",
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "carbonAssets",
+        "outputs": [
+            {
+                "name": "registryID",
+                "type": "uint256"
+            },
+            {
+                "name": "assetName",
+                "type": "string"
+            },
+            {
+                "name": "carbonAsset",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "availableFund",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -318,6 +337,81 @@
         "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "name": "_owner",
+                "type": "address"
+            },
+            {
+                "name": "_spender",
+                "type": "address"
+            }
+        ],
+        "name": "allowance",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "openAddress",
+        "outputs": [
+            {
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "newOwner",
+                "type": "address"
+            }
+        ],
+        "name": "transferOwnership",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "name": "aF",
+                "type": "uint256"
+            }
+        ],
+        "name": "declareAvailable",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "name": "name",
+                "type": "string"
+            }
+        ],
+        "name": "addAsset",
+        "type": "event"
     },
     {
         "anonymous": false,
@@ -364,6 +458,28 @@
         "inputs": [
             {
                 "indexed": true,
+                "name": "owner",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "name": "spender",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "name": "value",
+                "type": "uint256"
+            }
+        ],
+        "name": "Approval",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
                 "name": "from",
                 "type": "address"
             },
@@ -380,103 +496,21 @@
         ],
         "name": "Transfer",
         "type": "event"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "name": "_to",
-                "type": "address"
-            },
-            {
-                "name": "_amount",
-                "type": "uint256"
-            }
-        ],
-        "name": "mint",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "name": "newOwner",
-                "type": "address"
-            }
-        ],
-        "name": "transferOwnership",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "name": "_spender",
-                "type": "address"
-            },
-            {
-                "name": "_value",
-                "type": "uint256"
-            }
-        ],
-        "name": "approve",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "name": "_to",
-                "type": "address"
-            },
-            {
-                "name": "_value",
-                "type": "uint256"
-            }
-        ],
-        "name": "transfer",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
     }
 ]);
-        var unlockReserve = unlockReserveContract.at('0x3c1017af82ef15e47300097b1fe6a03efc455e7d');
-        // console.log(CarbonLoan);
+        var unlockReserve = unlockReserveContract.at('0xbbd22a5ecd9540af8802fe0a0074255cdb580c08');
+        console.log(unlockReserve);
         var loanEvent = unlockReserve.declareAvailable();
 
         loanEvent.watch(function(error, result){
             if (!error)
                 {
                     $("#loader").hide();
-                    $("#carbon_in").html(result.args.id + ' SOM');
+                    $("#carbon_in").html(result.args.aF + ' SOM');
                 } else {
                     $("#loader").hide();
                     console.log(error);
+                    $("#carbon_in").html('messed up');
                 }
         });
 
@@ -485,7 +519,7 @@
             unlockReserve.unlock_reserve($("#land").val(), $("#carbon_units").val(), (err, res) => {
                 if (err) {
                     $("#loader").hide();
-                    console.log('oooops');
+                    console.log(err);
                 } else {
 
                 }
