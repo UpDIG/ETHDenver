@@ -1,14 +1,12 @@
 pragma solidity ^0.4.17;
-import './Ownable.sol';
-import './SOMCoin.sol';
+import './UnlockVault.sol';
 
-contract CarbonLoan is SOMCoin { 
+contract CarbonLoan is UnlockVault { 
 
-    event NewLoanRequested(uint id);
-    event LoanApproved(uint id);
-    event PaidBack(uint id);
-    
-    uint public availableFund = totalSupply;
+    event LoanIssued(uint id);
+    event NewDebtor(uint id);
+
+    uint public availableFund;
 
     struct DebtorStruct {
         uint registryID;
@@ -35,19 +33,21 @@ contract CarbonLoan is SOMCoin {
         debtors[msg.sender].owe = 0;
         debtors[msg.sender].paid = 0;
         debtors[msg.sender].canborrow = true;
-        
+        NewDebtor(debtors[msg.sender].registryID);
     }
 
-
-    function approveloan(address debtor_address) public returns (bool success){
+    function approveloan(address debtor_address) public onlyOpenAddress returns (bool success){
         if (!isRegisteredDebtor(debtor_address)) revert();
         //uint registryID = DebtorIndexes[debtor_address];
         // uint owe = debtors[debtor_address].owe;
         // uint paid = debtors[debtor_address].paid;
         bool canborrow = debtors[debtor_address].canborrow;
         if (! canborrow) return false;
-        Transfer(msg.sender, debtor_address, 5);
-        availableFund = availab
+        allowance(msg.sender, msg.sender);
+        increaseApproval(msg.sender, 5);
+        transferFrom(msg.sender, debtor_address, 5);
+        availableFund = availableFund - 5;
+        LoanIssued(debtors[debtor_address].registryID);
         return true;
     }
 
