@@ -6,6 +6,7 @@ import './SOMCoin.sol';
 contract UnlockVault is Ownable, SOMCoin {
 
     uint public availableFund = 0;
+    event declareAvailable(uint aF);
 
     struct CarbonAsset {
         uint registryID;
@@ -20,6 +21,10 @@ contract UnlockVault is Ownable, SOMCoin {
     function addOpenAddress(address _openAddress) public onlyOwner {
         allowance(_openAddress, _openAddress);
         openAddress = _openAddress;
+    }
+
+    function getAvailableFund() public view{
+        declareAvailable(availableFund);
     }
 
     modifier onlyOpenAddress() {
